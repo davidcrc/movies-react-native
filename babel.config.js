@@ -8,5 +8,10 @@ module.exports = {
       "allowUndefined": true,
       "verbose": false
     }]
-  ]
+  ],
+  env: {
+    production: {
+      plugins: ['react-native-paper/babel'],
+    },
+  },
 };
