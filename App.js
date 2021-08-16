@@ -6,7 +6,7 @@ const App = () => {
   console.log("hola lola")
   return (
     <SafeAreaView>
-      <Button mode="contained" onPress={() => console.log('Pressed')}>
+      <Button icon="facebook" mode="contained" onPress={() => console.log('Pressed')}>
         Press me
       </Button>
 
