@@ -11,7 +11,7 @@ import {
 } from 'react-native-paper';
 import {name as appName} from './app.json';
 import App from './App';
-import PreferencesContext from './src/context/ReferencesContext';
+import PreferencesContext from './src/context/PreferencesContext';
 
 export default function Main() {
   const [theme, setTheme] = React.useState('dark');
