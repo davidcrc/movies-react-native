@@ -17,3 +17,5 @@ npm install @react-navigation/drawer
 npm i react-native-reanimated    
 npm i react-native-gesture-handler
 
+## Dev tools
+yarn global add react-devtools
