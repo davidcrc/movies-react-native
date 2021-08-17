@@ -14,35 +14,55 @@ const StackNavigation = props => {
   const {navigation} = props;
 
   const buttonLeft = () => {
-    return <IconButton icon="menu" onPress={() => navigation.openDrawer() } />;
+    return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />;
   };
-  
+
+  const buttonRight = () => {
+    return <IconButton icon="magnify" onPress={() => navigation.navigate('Search')} />;
+  };
+
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{title: 'themovieApp', headerLeft: () => buttonLeft()}}
+        options={{
+          title: 'themovieApp',
+          headerLeft: () => buttonLeft(),
+          headerRight: () => buttonRight(),
+        }}
       />
       <Stack.Screen
         name="Movie"
         component={MovieScreen}
-        options={{title: 'Movie', headerLeft: () => buttonLeft()}}
+        options={{
+          title: 'Movie',
+          headerLeft: () => buttonLeft(),
+          headerRight: () => buttonRight(),
+        }}
       />
       <Stack.Screen
         name="News"
         component={NewsScreen}
-        options={{title: 'News', headerLeft: () => buttonLeft()}}
+        options={{
+          title: 'News',
+          headerLeft: () => buttonLeft(),
+          headerRight: () => buttonRight(),
+        }}
       />
       <Stack.Screen
         name="Popular"
         component={PopularScreen}
-        options={{title: 'Popular', headerLeft: () => buttonLeft()}}
+        options={{
+          title: 'Popular',
+          headerLeft: () => buttonLeft(),
+          headerRight: () => buttonRight(),
+        }}
       />
       <Stack.Screen
         name="Search"
         component={SearchScreen}
-        options={{title: 'Search', headerLeft: () => buttonLeft()}}
+        options={{title: 'Search'}}
       />
     </Stack.Navigator>
   );
