@@ -19,3 +19,6 @@ npm i react-native-gesture-handler
 
 ## Dev tools
 yarn global add react-devtools
+
+## Carrusel - https://github.com/meliorence/react-native-snap-carousel
+npm i react-native-snap-carousel
