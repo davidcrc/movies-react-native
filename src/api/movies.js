@@ -23,12 +23,6 @@ export async function getGenreMovieApi(idGenres) {
 
   // Utilizando async await
   const response = await fetch(url);
-  const result = await response.json();
-  const arrayGenres = [];
-  idGenres.forEach(id => {
-    result.genres.forEach(item => {
-      if (item.id === id) arrayGenres.push(item.name);
-    });
-  });
-  return arrayGenres;
+  return await response.json();
+
 }

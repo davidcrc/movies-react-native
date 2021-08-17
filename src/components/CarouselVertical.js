@@ -16,19 +16,16 @@ const {width} = Dimensions.get('window');
 const ITEM_WIDTH = Math.round(width * 0.7);
 
 function RenderItem(props) {
-  const {data} = props;
+  const {data,allGenres} = props;
   const {title, poster_path, genre_ids} = data.item;
-  const [genres, setGenres] = useState(null);
   const imageUrl = `${API_BASE_PATH_IMG}/w500${poster_path}`;
 
-  const getGenreMovie = async genre_ids => {
-    const response = await getGenreMovieApi(genre_ids);
-    // console.log("\nAQUI EL RES", response)
-    setGenres(response);
-  };
-  useEffect(() => {
-    getGenreMovie(genre_ids);
-  }, []);
+  const genres = [];
+  genre_ids.forEach(id => {
+    allGenres && allGenres.forEach(item => {
+      if (item.id === id) genres.push(item.name);
+    });
+  });  
 
   return (
     <TouchableWithoutFeedback onPress={() => console.log('wiii')}>
@@ -51,12 +48,24 @@ function RenderItem(props) {
 
 const CarouselVertical = props => {
   const {data} = props;
+  const [genres, setGenres] = useState(null);
+
+  const getGenreMovie = async () => {
+    const response = await getGenreMovieApi();
+    // console.log("\nAQUI EL RES", response)
+    setGenres(response.genres);
+  };
+
+  useEffect(() => {
+    getGenreMovie();
+  }, []);
+  
   // console.log("que hay??", data)
   return (
     <Carousel
       layout={'default'}
       data={data}
-      renderItem={item => <RenderItem data={item} />}
+      renderItem={item => <RenderItem allGenres={genres} data={item} />}
       sliderWidth={width}
       itemWidth={ITEM_WIDTH}
     />
