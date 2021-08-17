@@ -26,11 +26,13 @@ const HomeScreen = props => {
   };
 
   const getGenreMovies = async (genresId) => {
-    const response = await getGenreMoviesApi(genresId);
-    // console.log("\nAQUI EL RES", response.results)
-    console.log("\nAQUI EL RES ", response.results.length)
+    const response = await getGenreMoviesApi(genresId);    
     setGenreMovies(response.results);
   };
+
+  useEffect(() => {
+    getGenreMovies(genreSelected);
+  }, [genreSelected]);
 
   useEffect(() => {
     getNewsMovies();
@@ -43,12 +45,6 @@ const HomeScreen = props => {
   useEffect(() => {
     getAllGenres();
   }, []);
-
-  useEffect(() => {
-    console.log("genero seleccionado", genreSelected)
-    getGenreMovies(genreSelected);
-  }, [genreSelected]);
-
 
   const onChangeGenre = newGenreId => {
     setGenreSelected(newGenreId);

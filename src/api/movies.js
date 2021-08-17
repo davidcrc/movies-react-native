@@ -26,12 +26,19 @@ export async function getAllGenresApi() {
   return await response.json();
 
 }
-export async function getGenreMoviesApi(idGenres) {
-  const url = `${API_HOST}/discover/movie?api_key=${API_KEY}&with_genres=${idGenres}&language=${API_LANG}`;
+export async function getGenreMoviesApi(idGenre) {
+  const url = `${API_HOST}/discover/movie?api_key=${API_KEY}&with_genres=${idGenre}&language=${API_LANG}`;
+
+  // Utilizando async await
+  const response = await fetch(url);
+  return await response.json();
+}
+
+export async function getMovieByIdApi(idMovie) {
+  const url = `${API_HOST}/movie/${idMovie}?api_key=${API_KEY}&language=${API_LANG}`;
   console.log('la url', url);
 
   // Utilizando async await
   const response = await fetch(url);
   return await response.json();
-
 }

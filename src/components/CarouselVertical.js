@@ -83,6 +83,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 1,
     shadowRadius: 10,
+    alignItems: 'center',
+    height: 500
   },
   image: {
     width: '100%',
