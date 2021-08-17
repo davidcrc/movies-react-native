@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Title } from 'react-native-paper';
-import { getGenreMovieApi, getNewsMovieApi } from '../api/movies';
+import { getAllGenresApi, getNewsMovieApi, getGenreMoviesApi } from '../api/movies';
 import CarouselVertical from '../components/CarouselVertical';
+import CarouselMulti from '../components/CarouselMulti';
 import { map, size } from 'lodash';
 
 const HomeScreen = props => {
@@ -10,6 +11,7 @@ const HomeScreen = props => {
   const [newsMovies, setNewsMovies] = useState(null);
   const [genresList, setGenresList] = useState([]);
   const [genreSelected, setGenreSelected] = useState();
+  const [genreMovies, setGenreMovies] = useState(null)
 
   const getNewsMovies = async () => {
     const response = await getNewsMovieApi();
@@ -17,11 +19,17 @@ const HomeScreen = props => {
     setNewsMovies(response.results);
   };
 
-  const getGenreMovie = async () => {
-    const response = await getGenreMovieApi();
-    // console.log("\nAQUI EL RES", response)
+  const getAllGenres = async () => {
+    const response = await getAllGenresApi();
     setGenresList(response.genres);
     setGenreSelected(response.genres[0].id)   // po default el primero que retorna
+  };
+
+  const getGenreMovies = async (genresId) => {
+    const response = await getGenreMoviesApi(genresId);
+    // console.log("\nAQUI EL RES", response.results)
+    console.log("\nAQUI EL RES ", response.results.length)
+    setGenreMovies(response.results);
   };
 
   useEffect(() => {
@@ -33,8 +41,14 @@ const HomeScreen = props => {
   }, []);
 
   useEffect(() => {
-    getGenreMovie();
+    getAllGenres();
   }, []);
+
+  useEffect(() => {
+    console.log("genero seleccionado", genreSelected)
+    getGenreMovies(genreSelected);
+  }, [genreSelected]);
+
 
   const onChangeGenre = newGenreId => {
     setGenreSelected(newGenreId);
@@ -70,6 +84,10 @@ const HomeScreen = props => {
             </Text>
           ))}
         </ScrollView>
+
+        {genreMovies && (
+          <CarouselMulti data={genreMovies} navigation={navigation} />
+        )}
       </View>
     </ScrollView>
   );

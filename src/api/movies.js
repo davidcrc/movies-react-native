@@ -17,9 +17,18 @@ export async function getNewsMovieApi(page = 1) {
   // })
 }
 
-export async function getGenreMovieApi(idGenres) {
+export async function getAllGenresApi() {
   const url = `${API_HOST}/genre/movie/list?api_key=${API_KEY}&language=${API_LANG}`;
   // console.log('la url', url);
+
+  // Utilizando async await
+  const response = await fetch(url);
+  return await response.json();
+
+}
+export async function getGenreMoviesApi(idGenres) {
+  const url = `${API_HOST}/discover/movie?api_key=${API_KEY}&with_genres=${idGenres}&language=${API_LANG}`;
+  console.log('la url', url);
 
   // Utilizando async await
   const response = await fetch(url);

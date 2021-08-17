@@ -10,7 +10,7 @@ import { Text, Title } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import { map, size } from 'lodash';
 import { API_BASE_PATH_IMG } from '../utils/constants';
-import { getGenreMovieApi } from '../api/movies';
+import { getAllGenresApi } from '../api/movies';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = Math.round(width * 0.7);
