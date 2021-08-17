@@ -1,18 +1,34 @@
-import { API_HOST, API_KEY, API_LANG } from '../utils/constants';
+import {API_HOST, API_KEY, API_LANG} from '../utils/constants';
 
 export async function getNewsMovieApi(page = 1) {
   const url = `${API_HOST}/movie/now_playing?api_key=${API_KEY}&language=${API_LANG}&page=${page}`;
-  console.log('la url', url);
+  // console.log('la url', url);
 
   // Utilizando async await
-  const response = await fetch(url)
+  const response = await fetch(url);
   return await response.json();
 
-  // // Utilizando then 
-  
+  // // Utilizando then
+
   // return fetch(url).then((response) => {
   //   return response.json();
   // }).then((result) => {
   //   return result;
   // })
+}
+
+export async function getGenreMovieApi(idGenres) {
+  const url = `${API_HOST}/genre/movie/list?api_key=${API_KEY}&language=${API_LANG}`;
+  // console.log('la url', url);
+
+  // Utilizando async await
+  const response = await fetch(url);
+  const result = await response.json();
+  const arrayGenres = [];
+  idGenres.forEach(id => {
+    result.genres.forEach(item => {
+      if (item.id === id) arrayGenres.push(item.name);
+    });
+  });
+  return arrayGenres;
 }
