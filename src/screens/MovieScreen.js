@@ -1,10 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const MovieScreen = () => {
+const MovieScreen = (props) => {
+  console.log("props movie", props.route.params)
+  const { id } = props.route.params
   return (
     <View>
-      <Text>MovieScreen</Text>
+      <Text>MovieScreen {id}</Text>
     </View>
   )
 }

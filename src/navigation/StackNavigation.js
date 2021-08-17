@@ -37,7 +37,7 @@ const StackNavigation = props => {
         component={MovieScreen}
         options={{
           title: 'Movie',
-          headerLeft: () => buttonLeft(),
+          // headerLeft: () => buttonLeft(),
           headerRight: () => buttonRight(),
         }}
       />

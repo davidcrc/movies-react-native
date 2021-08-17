@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,31 +6,40 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {Text, Title} from 'react-native-paper';
+import { Text, Title } from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
-import {map, size} from 'lodash';
-import {API_BASE_PATH_IMG} from '../utils/constants';
-import {getGenreMovieApi} from '../api/movies';
+import { map, size } from 'lodash';
+import { API_BASE_PATH_IMG } from '../utils/constants';
+import { getGenreMovieApi } from '../api/movies';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const ITEM_WIDTH = Math.round(width * 0.7);
 
 function RenderItem(props) {
-  const {data,allGenres} = props;
-  const {title, poster_path, genre_ids} = data.item;
+  const { data, allGenres, navigation } = props;
+  const { id, title, poster_path, genre_ids } = data.item;
   const imageUrl = `${API_BASE_PATH_IMG}/w500${poster_path}`;
 
   const genres = [];
   genre_ids.forEach(id => {
-    allGenres && allGenres.forEach(item => {
-      if (item.id === id) genres.push(item.name);
-    });
-  });  
+    allGenres &&
+      allGenres.forEach(item => {
+        if (item.id === id) genres.push(item.name);
+      });
+  });
+
+  const onNavigation = () => {
+    navigation.navigate('Movie', { id });
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={() => console.log('wiii')}>
+    <TouchableWithoutFeedback onPress={() => onNavigation()}>
       <View style={styles.card}>
-        <Image style={styles.image} source={{uri: imageUrl}} />
+        <Image
+          style={styles.image}
+          source={{ uri: imageUrl }}
+          resizeMode={'contain'}
+        />
         <Title style={styles.title}>{title}</Title>
         <View style={styles.genres}>
           {genres &&
@@ -47,25 +56,16 @@ function RenderItem(props) {
 }
 
 const CarouselVertical = props => {
-  const {data} = props;
-  const [genres, setGenres] = useState(null);
+  const { data, navigation, genres } = props;
 
-  const getGenreMovie = async () => {
-    const response = await getGenreMovieApi();
-    // console.log("\nAQUI EL RES", response)
-    setGenres(response.genres);
-  };
-
-  useEffect(() => {
-    getGenreMovie();
-  }, []);
-  
   // console.log("que hay??", data)
   return (
     <Carousel
       layout={'default'}
       data={data}
-      renderItem={item => <RenderItem allGenres={genres} data={item} />}
+      renderItem={item => (
+        <RenderItem allGenres={genres} data={item} navigation={navigation} />
+      )}
       sliderWidth={width}
       itemWidth={ITEM_WIDTH}
     />
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 450,
+    height: 400,
     borderRadius: 20,
   },
   title: {
