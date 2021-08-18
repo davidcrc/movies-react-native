@@ -11,7 +11,7 @@ const ModalVideo = props => {
 
   const getVideoMovie = async idMovie => {
     const response = await getVideoMovieApi(idMovie);
-    console.log('el resp', response.results);
+    // console.log('el resp', response.results);
     let idVideo = null;
     response.results.forEach((video, index) => {
       if (video.site === 'YouTube' && !idVideo) {

@@ -3,7 +3,7 @@
  */
 
 import * as React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, StatusBar} from 'react-native';
 import {
   Provider as PaperProvider,
   DarkTheme as DarkThemePaper,
@@ -34,7 +34,7 @@ export default function Main() {
     <PreferencesContext.Provider value={preferenees}>
       <PaperProvider
         theme={theme === 'dark' ? DarkThemePaper : DefaultThemePaper}>
-        {/* <React.StatusBar barStyle={theme === "dark" ? 'dark-content': 'light-content'}/> */}
+        <StatusBar barStyle={theme === "dark" ? 'dark-content': 'light-content'}/>
         <App theme={theme} />
       </PaperProvider>
     </PreferencesContext.Provider>
