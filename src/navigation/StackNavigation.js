@@ -63,7 +63,7 @@ const StackNavigation = props => {
       <Stack.Screen
         name="Search"
         component={SearchScreen}
-        options={{title: 'Search'}}
+        options={{title: 'Search movie' }}
       />
     </Stack.Navigator>
   );

@@ -54,6 +54,15 @@ export async function getVideoMovieApi(idMovie) {
 
 export async function gePopularMoviesApi(page=1) {
   const url = `${API_HOST}/movie/popular?api_key=${API_KEY}&language=${API_LANG}&page=${page}`;
+  // console.log('la url', url);
+
+  // Utilizando async await
+  const response = await fetch(url);
+  return await response.json();
+}
+
+export async function searchMoviesApi(search) {
+  const url = `${API_HOST}/search/movie?api_key=${API_KEY}&language=${API_LANG}&query=${search}`;
   console.log('la url', url);
 
   // Utilizando async await

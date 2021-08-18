@@ -529,7 +529,7 @@ SPEC CHECKSUMS:
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: 6d3e854f0e7260a648badd0d44fc364bc9da9728
   RCTTypeSafety: c1f31d19349c6b53085766359caac425926fafaa
-  RCTYouTube: a8bb45705622a6fc9decf64be04128d3658ed411
+  RCTYouTube: 13fdb790b6339111cb7191427cac8708a8a09215
   React: bda6b6d7ae912de97d7a61aa5c160db24aa2ad69
   React-callinvoker: 9840ea7e8e88ed73d438edb725574820b29b5baa
   React-Core: b5e385da7ce5f16a220fc60fd0749eae2c6120f0
@@ -538,8 +538,8 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
-  react-native-webview: 133a6a5149f963259646e710b4545c67ef35d7c9
+  react-native-safe-area-context: 8465df05de8106c584b117f0e027e17174d6e02e
+  react-native-webview: b176c6404ad40d10cfc818be41c053f85a72d751
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
