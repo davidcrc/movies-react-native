@@ -27,7 +27,7 @@ const StackNavigation = props => {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'themovieApp',
+          title: '',
           headerLeft: () => buttonLeft(),
           headerRight: () => buttonRight(),
         }}
