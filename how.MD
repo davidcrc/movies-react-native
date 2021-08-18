@@ -34,3 +34,6 @@ npm i react-native-webview
 - android/gradle.properties: android.useAndroidX=true, android.enableJetifier=true
 
 --- npm install react-native-youtube-iframe
+
+## Rating - https://github.com/Monte9/react-native-ratings
+npm i react-native-ratings

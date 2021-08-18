@@ -5,6 +5,10 @@ import { map } from 'lodash';
 import { getMovieByIdApi } from '../api/movies';
 import { API_BASE_PATH_IMG } from '../utils/constants';
 import ModalVideo from '../components/ModalVideo';
+import { Rating } from 'react-native-ratings';
+import usePreferences from '../hooks/usePreferences';
+import starDark from '../assets/png/starDark.png';
+import starLight from '../assets/png/starLight.png';
 
 function MovieImage(props) {
   const { posterPath } = props;
@@ -53,6 +57,29 @@ function MovieTitle(props) {
   );
 }
 
+function MovieRating(props) {
+  const { voteCount, voteAverage } = props;
+  const media = voteAverage / 2;
+  const { theme } = usePreferences();
+
+  return (
+    <View style={styles.viewRating}>
+      <Rating
+        type="custom"
+        ratingImage={theme === 'dark' ? starDark : starLight}
+        ratingColor="#ffc205"
+        ratingBackgroundColor={theme === 'dark' ? '#192734' : '#f0f0f0'}
+        imageSize={20}
+        style={{ marginRight: 15 }}
+      />
+      <Text style={{ fontSize: 16, marginRight: 15 }}>{media}</Text>
+      <Text style={{ fontSize: 12, color: '#8697a5', textAlign: 'center' }}>
+        {voteCount}
+      </Text>
+    </View>
+  );
+}
+
 const MovieScreen = props => {
   // console.log('props movie', props.route.params);
   const { id } = props.route.params;
@@ -73,10 +100,18 @@ const MovieScreen = props => {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} >
         <MovieImage posterPath={movie.poster_path} />
         <MovieTrailer setShowVideo={setShowVideo} />
         <MovieTitle movie={movie} />
+        <MovieRating
+          voteCount={movie.vote_count}
+          voteAverage={movie.vote_average}
+        />
+        <Text style={styles.overview}>{movie.overview}</Text>
+        <Text style={[styles.overview, {marginBottom: 30}]}>
+          Fecha de lanzamiento: {movie.release_date}
+        </Text>
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
     </>
@@ -121,6 +156,18 @@ const styles = StyleSheet.create({
   },
   genre: {
     marginRight: 20,
+    color: '#8697a5',
+  },
+  viewRating: {
+    marginHorizontal: 30,
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  overview: {
+    marginHorizontal: 30,
+    marginTop: 20,
+    // textAlign: 'justify',
     color: '#8697a5',
   },
 });
