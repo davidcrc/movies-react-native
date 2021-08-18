@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { Text, Title, IconButton } from 'react-native-paper';
+import { map } from 'lodash';
 import { getMovieByIdApi } from '../api/movies';
 import { API_BASE_PATH_IMG } from '../utils/constants';
 import ModalVideo from '../components/ModalVideo';
@@ -11,7 +12,11 @@ function MovieImage(props) {
 
   return (
     <View style={styles.viewPoster}>
-      <Image style={styles.poster} source={{ uri: imageUrl }} resizeMode={'contain'}/>
+      <Image
+        style={styles.poster}
+        source={{ uri: imageUrl }}
+        resizeMode={'contain'}
+      />
     </View>
   );
 }
@@ -32,13 +37,29 @@ function MovieTrailer(props) {
   );
 }
 
+function MovieTitle(props) {
+  const { movie } = props;
+  return (
+    <View style={styles.viewInfo}>
+      <Title>{movie.title}</Title>
+      <View style={styles.viewGenre}>
+        {map(movie.genres, (genre, index) => (
+          <Text key={genre.id} style={styles.genre}>
+            {genre.name}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 const MovieScreen = props => {
   // console.log('props movie', props.route.params);
   const { id } = props.route.params;
   const [movie, setMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
 
-  const getMovieById = async (idMovie) => {
+  const getMovieById = async idMovie => {
     const response = await getMovieByIdApi(idMovie);
     // console.log('\nAQUI EL RES', response);
     setMovie(response);
@@ -55,6 +76,7 @@ const MovieScreen = props => {
       <ScrollView>
         <MovieImage posterPath={movie.poster_path} />
         <MovieTrailer setShowVideo={setShowVideo} />
+        <MovieTitle movie={movie} />
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
     </>
@@ -90,5 +112,15 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 100,
+  },
+  viewInfo: {
+    marginHorizontal: 30,
+  },
+  viewGenre: {
+    flexDirection: 'row',
+  },
+  genre: {
+    marginRight: 20,
+    color: '#8697a5',
   },
 });
