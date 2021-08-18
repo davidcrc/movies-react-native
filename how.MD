@@ -25,3 +25,12 @@ npm i react-native-snap-carousel
 
 ## lodash - mejoras para javascript
 npm i lodash
+
+## Videos de yutu - IOS (necesita la app)- https://github.com/davidohayon669/react-native-youtube
+npm i react-native-youtube
+
+## Video yutu Android - https://github.com/react-native-webview/react-native-webview
+npm i react-native-webview
+- android/gradle.properties: android.useAndroidX=true, android.enableJetifier=true
+
+--- npm install react-native-youtube-iframe

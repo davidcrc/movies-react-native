@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import { Text, Title, IconButton } from 'react-native-paper';
 import { getMovieByIdApi } from '../api/movies';
 import { API_BASE_PATH_IMG } from '../utils/constants';
+import ModalVideo from '../components/ModalVideo';
 
 function MovieImage(props) {
   const { posterPath } = props;
@@ -9,19 +11,36 @@ function MovieImage(props) {
 
   return (
     <View style={styles.viewPoster}>
-      <Image style={styles.poster} source={{ uri: imageUrl }} />
+      <Image style={styles.poster} source={{ uri: imageUrl }} resizeMode={'contain'}/>
+    </View>
+  );
+}
+
+function MovieTrailer(props) {
+  const { setShowVideo } = props;
+
+  return (
+    <View style={styles.viewPlay}>
+      <IconButton
+        icon="play"
+        color="#000"
+        size={30}
+        style={styles.play}
+        onPress={() => setShowVideo(true)}
+      />
     </View>
   );
 }
 
 const MovieScreen = props => {
-  console.log('props movie', props.route.params);
+  // console.log('props movie', props.route.params);
   const { id } = props.route.params;
   const [movie, setMovie] = useState(null);
+  const [showVideo, setShowVideo] = useState(false);
 
-  const getMovieById = async idMovie => {
+  const getMovieById = async (idMovie) => {
     const response = await getMovieByIdApi(idMovie);
-    console.log('\nAQUI EL RES', response);
+    // console.log('\nAQUI EL RES', response);
     setMovie(response);
   };
 
@@ -29,12 +48,15 @@ const MovieScreen = props => {
     getMovieById(id);
   }, []);
 
+  if (!movie) return null;
+
   return (
     <>
       <ScrollView>
-        {movie && <MovieImage posterPath={movie.poster_path} />}
+        <MovieImage posterPath={movie.poster_path} />
+        <MovieTrailer setShowVideo={setShowVideo} />
       </ScrollView>
-      {/* Modal */}
+      <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
     </>
   );
 };
@@ -49,12 +71,24 @@ const styles = StyleSheet.create({
       height: 10,
     },
     shadowOpacity: 1,
-    shadowRadius: 10,
+    textShadowRadius: 10,
   },
   poster: {
     width: '100%',
     height: 500,
-    borderBottomLeftRadius: 10,
+    borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+  },
+  viewPlay: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  play: {
+    backgroundColor: '#fff',
+    marginTop: -40,
+    marginRight: 30,
+    width: 60,
+    height: 60,
+    borderRadius: 100,
   },
 });
