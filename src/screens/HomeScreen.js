@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Title } from 'react-native-paper';
+import { ActivityIndicator, Title } from 'react-native-paper';
 import { getAllGenresApi, getNewsMovieApi, getGenreMoviesApi } from '../api/movies';
 import CarouselVertical from '../components/CarouselVertical';
 import CarouselMulti from '../components/CarouselMulti';
@@ -31,6 +31,7 @@ const HomeScreen = props => {
   };
 
   useEffect(() => {
+    setGenreMovies(null)
     getGenreMovies(genreSelected);
   }, [genreSelected]);
 
@@ -81,6 +82,7 @@ const HomeScreen = props => {
           ))}
         </ScrollView>
 
+        <ActivityIndicator animating={genreMovies == null} color={"#1ae1f2"} />
         {genreMovies && (
           <CarouselMulti data={genreMovies} navigation={navigation} />
         )}

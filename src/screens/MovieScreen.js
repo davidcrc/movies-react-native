@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import { Text, Title, IconButton } from 'react-native-paper';
 import { map } from 'lodash';
 import { getMovieByIdApi } from '../api/movies';
@@ -85,11 +91,14 @@ const MovieScreen = props => {
   const { id } = props.route.params;
   const [movie, setMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getMovieById = async idMovie => {
+    setIsLoading(true);
     const response = await getMovieByIdApi(idMovie);
     // console.log('\nAQUI EL RES', response);
     setMovie(response);
+    setIsLoading(false)
   };
 
   useEffect(() => {
@@ -98,9 +107,13 @@ const MovieScreen = props => {
 
   if (!movie) return null;
 
-  return (
+  return isLoading ? (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color="#1ae1f2" />
+    </View>
+  ) : (
     <>
-      <ScrollView showsVerticalScrollIndicator={false} >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <MovieImage posterPath={movie.poster_path} />
         <MovieTrailer setShowVideo={setShowVideo} />
         <MovieTitle movie={movie} />
@@ -109,7 +122,7 @@ const MovieScreen = props => {
           voteAverage={movie.vote_average}
         />
         <Text style={styles.overview}>{movie.overview}</Text>
-        <Text style={[styles.overview, {marginBottom: 30}]}>
+        <Text style={[styles.overview, { marginBottom: 30 }]}>
           Fecha de lanzamiento: {movie.release_date}
         </Text>
       </ScrollView>
@@ -121,6 +134,15 @@ const MovieScreen = props => {
 export default MovieScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
   viewPoster: {
     shadowColor: '#000',
     shadowOffset: {

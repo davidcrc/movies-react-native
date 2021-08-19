@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Text, Title, Button } from 'react-native-paper';
+import { Text, Title, Button, ActivityIndicator } from 'react-native-paper';
 import { map } from 'lodash';
 import { Rating } from 'react-native-ratings';
 import { gePopularMoviesApi } from '../api/movies';
@@ -77,8 +77,10 @@ const PopularScreen = props => {
   const [showBtnMore, setShowBtnMore] = useState(false);
   const [page, setPage] = useState(1);
   const { theme } = usePreferences();
+  const [isLoading, setIsLoading] = useState(true);
 
   const getPopularMovies = async page => {
+    setIsLoading(true);
     const response = await gePopularMoviesApi(page);
     // console.log('data', response.results);
     const totalPages = response.total_pages;
@@ -91,37 +93,48 @@ const PopularScreen = props => {
     } else {
       setShowBtnMore(false);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
     getPopularMovies(page);
   }, [page]);
 
-  if (!movies) return null;
+  // if (!movies) return null;
 
   return (
-    <ScrollView>
-      {map(movies, (movie, index) => (
-        <Movie
-          key={index}
-          movie={movie}
-          theme={theme}
-          navigation={navigation}
+    <>
+      <ScrollView>
+        {map(movies, (movie, index) => (
+          <Movie
+            key={index}
+            movie={movie}
+            theme={theme}
+            navigation={navigation}
+          />
+        ))}
+        {showBtnMore && (
+          <Button
+            mode="contained"
+            contentStyle={styles.loadMoreContainer}
+            style={styles.loadMore}
+            labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
+            onPress={() => {
+              setPage(page + 1);
+            }}>
+            Cargar mas ...
+          </Button>
+        )}
+      </ScrollView>
+      <View style={styles.activityIndicator}>
+
+      <ActivityIndicator
+        
+        animating={isLoading}
+        color={'#1ae1f2'}
         />
-      ))}
-      {showBtnMore && (
-        <Button
-          mode="contained"
-          contentStyle={styles.loadMoreContainer}
-          style={styles.loadMore}
-          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
-          onPress={() => {
-            setPage(page + 1);
-          }}>
-          Cargar mas ...
-        </Button>
-      )}
-    </ScrollView>
+      </View>
+    </>
   );
 };
 
@@ -152,5 +165,8 @@ styles = StyleSheet.create({
   },
   loadMore: {
     backgroundColor: 'transparent',
+  },
+  activityIndicator: {
+    marginTop: -150,
   },
 });
