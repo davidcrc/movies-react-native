@@ -1,4 +1,4 @@
-## The movie app
+# The movie app
 
 Muestra peliculas obtenidas de themovie DB
 
@@ -18,7 +18,7 @@ Muesta peliculas populares pero listadas de forma diferente que en inicio
 
 De modificar el tema a oscuro
 
-## TODO: 
+### TODO: 
 
 - El tema claro no se nota muy bien los textos
 - El buscar no deberia tener un titulo, deberia estador siempre 
