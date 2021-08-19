@@ -23,3 +23,4 @@ De modificar el tema a oscuro
 - El tema claro no se nota muy bien los textos
 - El buscar no deberia tener un titulo, deberia estador siempre 
   en la parte superior del screen
+- Algunos titulos de peliculas se salen de la pantalla
